@@ -24,15 +24,24 @@ X_train, X_test, y_train, y_test = train_test_split(
 st.sidebar.header("Model Selection")
 
 model_type = st.sidebar.radio(
-    "Choose Model Type",
-    ["Linear SVM", "Non-Linear SVM (RBF)"]
+    "Choose Non-Linear Model",
+    ["RBF SVM", "Polynomial SVM"]
 )
 
 # ---------------- Train model ----------------
-if model_type == "Linear SVM":
-    model = SVC(kernel="linear", C=10)
+if model_type == "RBF SVM":
+    model = SVC(
+        kernel="rbf",
+        C=10,
+        gamma="scale"
+    )
 else:
-    model = SVC(kernel="rbf", C=10, gamma="scale")
+    model = SVC(
+        kernel="poly",
+        degree=3,     # polynomial degree
+        C=10,
+        gamma="scale"
+    )
 
 model.fit(X_train, y_train)
 
